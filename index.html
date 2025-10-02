@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Planner | Capstone Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Study Schedule Planner 📅</h1>
+        <button id="add-task-btn">➕ New Study Goal</button>
+    </header>
+
+    <main>
+        <section id="planner-view">
+            <h2>Upcoming Tasks</h2>
+            <div class="controls">
+                <label for="filter-priority">Priority:</label>
+                <select id="filter-priority">
+                    <option value="all">All</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+                <label for="filter-category">Category:</label>
+                <select id="filter-category"> 
+                    <option value="all">All Categories</option>
+                </select>
+            </div>
+
+            <div id="task-list">
+                <p id="no-tasks-message" style="display: none;">You have no tasks saved. Click 'New Study Goal' to start!</p>
+            </div>
+        </section>
+
+        <aside id="timeline-view">
+            <h2>Progress & Status</h2>
+            <div id="progress-container">
+                <p class="status-message">Loading progress data...</p>
+            </div>
+        </aside>
+    </main>
+
+    <dialog id="task-modal">
+        <h3>Task Details</h3>
+        <form id="task-form">
+            <input type="hidden" id="task-id"> 
+
+            <label for="task-name">Task Name:</label>
+            <input type="text" id="task-name" required>
+
+            <label for="task-category">Category (e.g., Math, Project, Reading):</label>
+            <input type="text" id="task-category" required>
+            
+            <label for="due-date">Due Date:</label>
+            <input type="date" id="due-date" required>
+            
+            <label for="due-time">Due Time (Optional Reminder):</label>
+            <input type="time" id="due-time"> 
+
+            <label for="priority">Priority:</label>
+            <select id="priority" required>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+            
+            <div class="modal-actions">
+                <button type="submit" id="save-task-btn">Save Task</button>
+                <button type="button" id="close-modal-btn">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="script.js"></script>
+</body>
+</html>

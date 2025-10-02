@@ -1,0 +1,327 @@
+:root {
+    --primary-color: #4a90e2; /* Blue */
+    --secondary-color: #f5f5f5; /* Light Gray */
+    --high-priority-color: #e74c3c; /* Red */
+    --medium-priority-color: #f39c12; /* Orange */
+    --low-priority-color: #2ecc71; /* Green */
+    --text-color: #333;
+    --completed-color: #666;
+    --card-bg: white;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    /* Enable 3D perspective on the body/viewport */
+    perspective: 1000px;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Buttons --- */
+button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+#add-task-btn {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#add-task-btn:hover {
+    background-color: #ddd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Main Layout --- */
+main {
+    display: flex;
+    padding: 30px;
+    gap: 30px;
+}
+
+#planner-view, #timeline-view {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+#planner-view {
+    flex: 2;
+}
+
+#timeline-view {
+    flex: 1;
+}
+
+/* --- Task List / 3D Card Styling --- */
+.task-card {
+    background-color: var(--card-bg);
+    border: 1px solid #ddd;
+    border-left: 8px solid var(--primary-color); /* Priority strip */
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* 3D/Interactive properties */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.task-card:hover {
+    /* Lift the card and rotate it slightly on hover for 3D effect */
+    transform: translateY(-5px) rotateX(1deg) scale(1.01);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+}
+
+/* Conditional Styling based on Priority */
+.priority-High { border-left-color: var(--high-priority-color); }
+.priority-Medium { border-left-color: var(--medium-priority-color); }
+.priority-Low { border-left-color: var(--low-priority-color); }
+
+/* Completed Tasks */
+.task-card.completed {
+    opacity: 0.6;
+    border-left-color: var(--completed-color);
+    background-color: #fafafa;
+}
+
+.task-card.completed .task-details h4 {
+    text-decoration: line-through;
+    color: var(--completed-color);
+}
+
+/* --- Overdue Status --- */
+
+.task-card.overdue {
+    border: 3px solid var(--high-priority-color); /* Bright red border */
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); /* Pulsing red shadow */
+    animation: pulse-red 1.5s infinite alternate;
+}
+
+.task-card.overdue .task-details small {
+    color: var(--high-priority-color);
+    font-weight: bold;
+}
+
+@keyframes pulse-red {
+    from {
+        box-shadow: 0 0 10px rgba(231, 76, 60, 0.4);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(231, 76, 60, 0.8);
+    }
+}
+
+/* --- Task Info and Controls --- */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.controls select {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.task-details h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.15em;
+}
+
+.task-details small {
+    display: block;
+    font-size: 0.9em;
+    color: #888;
+}
+
+.task-actions button {
+    background-color: #e0e0e0;
+    color: var(--text-color);
+    padding: 8px 15px;
+    font-size: 0.9em;
+    border-radius: 15px;
+}
+
+.task-actions button:hover {
+    background-color: #ccc;
+    transform: scale(1.05);
+}
+
+/* Checkbox styling */
+.task-info input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+/* --- Progress Container --- */
+#progress-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.progress-ring-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: #fcfcfc;
+    width: 120px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.progress-ring-card p {
+    margin: 5px 0 0 0;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.progress-ring {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    /* The background is set dynamically by JS using conic-gradient */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    color: var(--text-color);
+    font-weight: bold;
+    border: 3px solid #eee; /* Light border around the ring */
+}
+
+.status-message {
+    text-align: center;
+    color: #888;
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* --- Modal (Dialog) --- */
+#task-modal {
+    border: none;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3); 
+    max-width: 450px;
+}
+
+#task-modal h3 {
+    color: var(--primary-color);
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+#task-form label {
+    font-weight: bold;
+}
+
+#task-form input,
+#task-form select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.modal-actions {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#save-task-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#close-modal-btn {
+    background-color: #ccc;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 900px) {
+    main {
+        flex-direction: column;
+        padding: 15px;
+    }
+    
+    #planner-view, #timeline-view {
+        flex: auto;
+        padding: 20px;
+    }
+    
+    header {
+        padding: 15px 20px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 500px) {
+    .task-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .task-info {
+        gap: 10px;
+    }
+}
